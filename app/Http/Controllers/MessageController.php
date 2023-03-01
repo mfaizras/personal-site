@@ -15,7 +15,7 @@ class MessageController extends Controller
 
     protected function sendTelegram($id, $pesan)
     {
-        $url = 'https://api.telegram.org/bot5009637121:AAGbec1jpE92MnbG0hkR1dnxgGSexGLRxic/sendmessage?chat_id=' . $id . '&text=' . $pesan;
+        $url = 'https://api.telegram.org/bot'.config('messages.telegram.bot_token').'/sendmessage?chat_id=' . $id . '&text=' . $pesan;
         $result = file_get_contents($url, true);
         $result = json_decode($result);
         return $result;
@@ -23,7 +23,7 @@ class MessageController extends Controller
 
     public function sendMessage($email, $name, $message)
     {
-        $id = '817652099';
+        $id = config('messages.telegram.author_user');
         $msg = 'New message from ' . $name . '(' . $email . ')%0A %0A' . $message;
         if ($this->sendTelegram($id, $msg)) {
             return true;
